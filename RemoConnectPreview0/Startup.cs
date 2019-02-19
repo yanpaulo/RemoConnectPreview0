@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using RemoConnectPreview0.Hubs;
+using RemoConnectPreview0.Services;
 namespace RemoConnectPreview0
 {
     public class Startup
@@ -32,6 +33,8 @@ namespace RemoConnectPreview0
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSingleton<Services.WebSocketManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,9 +48,11 @@ namespace RemoConnectPreview0
             {
                 app.UseExceptionHandler("/Error");
             }
-
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseWebSockets();
+            app.UseWebSocketService();
 
             app.UseMvc();
         }
