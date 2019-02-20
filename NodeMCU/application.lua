@@ -3,6 +3,7 @@ local wsTimer = tmr.create();
 
 ws:on("connection", function(ws)
   print('got ws connection')
+  setState(4)
 end)
 ws:on("receive", function(_, msg, opcode)
   print('got message:', msg, opcode)
@@ -21,10 +22,11 @@ end)
 
 function connect()
     print('Connecting...')
+    setState(3)
     ws:connect('ws://remo-connect-preview0.azurewebsites.net/ws')    
 end
 
-
-wsTimer:register(5000, tmr.ALARM_SEMI, connect)
-wsTimer:start()
-print('Waiting before connect')
+-- wsTimer:register(2000, tmr.ALARM_SEMI, connect)
+-- wsTimer:start()
+-- print('Waiting before connect')
+connect()
