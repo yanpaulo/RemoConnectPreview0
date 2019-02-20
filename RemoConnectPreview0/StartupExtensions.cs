@@ -19,7 +19,7 @@ namespace RemoConnectPreview0
                 if (context.WebSockets.IsWebSocketRequest)
                 {
                     var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                    app.ApplicationServices.GetService<Services.WebSocketManager>().RegisterWebSocket(webSocket);
+                    await app.ApplicationServices.GetService<Services.WebSocketManager>().RegisterWebSocketAsync(webSocket);
                 }
                 else
                 {
