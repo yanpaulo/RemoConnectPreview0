@@ -29,7 +29,7 @@ namespace RemoConnectPreview0.Services
 
         private void DoCleanup()
         {
-            webSockets.RemoveAll(s => s.CloseStatus.HasValue);
+            webSockets.RemoveAll(s => s.State != WebSocketState.Open);
         }
     }
 }
