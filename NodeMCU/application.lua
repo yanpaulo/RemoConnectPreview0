@@ -1,5 +1,4 @@
 local ws = websocket.createClient()
-local wsTimer = tmr.create();
 
 ws:on("connection", function(ws)
   print('got ws connection')
@@ -21,12 +20,9 @@ ws:on("close", function(_, status)
 end)
 
 function connect()
-    print('Connecting...')
+    print('Connecting to ws...')
     setState(3)
     ws:connect('ws://remo-connect-preview0.azurewebsites.net/ws')    
 end
 
--- wsTimer:register(2000, tmr.ALARM_SEMI, connect)
--- wsTimer:start()
--- print('Waiting before connect')
 connect()
