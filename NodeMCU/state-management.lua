@@ -1,12 +1,10 @@
 local state_tmr
-local last_state = 1
+
 function blink()
     if gpio.read(0) == 1 then
         gpio.write(0, gpio.LOW)
-        last_state = 0
     else
         gpio.write(0, gpio.HIGH)
-        last_state = 1
     end
 end
 

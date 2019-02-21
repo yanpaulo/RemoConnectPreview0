@@ -11,7 +11,10 @@ ws:on(
         deviceId = code
       }
     }
-    ws:send(sjson.encode(dataObj))
+    local dataJson = sjson.encode(dataObj)
+    print(dataJson)
+    ws:send(dataJson)
+    print("Registered!")
     setState(4)
   end
 )
@@ -20,9 +23,9 @@ ws:on(
   function(_, msg, opcode)
     print("got message:", msg, opcode)
     if msg == "on" then
-      gpio.write(1, gpio.LOW)
-    elseif msg == "off" then
       gpio.write(1, gpio.HIGH)
+    elseif msg == "off" then
+      gpio.write(1, gpio.LOW)
     end
   end
 )
@@ -41,4 +44,20 @@ function connect()
   ws:connect("ws://remo-connect-preview0.azurewebsites.net/ws")
 end
 
+function pinDown(level, pulse)
+  print(level)
+  if gpio.read(1) == 1 then
+    gpio.write(1, gpio.LOW)
+  else
+    gpio.write(1, gpio.HIGH)
+  end
+end
+
+function startGpio()
+  gpio.mode(1, gpio.OUTPUT)
+  gpio.mode(2, gpio.INT)
+  gpio.trig(2, "up", pinDown)
+end
+
 connect()
+startGpio()
